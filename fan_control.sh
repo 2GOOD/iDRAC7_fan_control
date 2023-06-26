@@ -32,7 +32,7 @@ T=$(ipmitool sdr type temperature | grep $TEMP_SENSOR | cut -d"|" -f5 | cut -d" 
 CPUT=$(ipmitool sdr type temperature | grep 0Eh | cut -d"|" -f5 | cut -d" " -f2)
 
 # If ambient temperature is above 35deg C enable dynamic control and exit, if below set manual control.
-if [[ $T > $TEMP_THRESHOLD ]]
+if [[ $T -ge $TEMP_THRESHOLD ]]
 then
   echo "$DATE --> IN: $T C | CPU: $CPUT C --> Temperature is above 35deg C --> Enabled dynamic fan control"
   ipmitool raw 0x30 0x30 0x01 0x01
